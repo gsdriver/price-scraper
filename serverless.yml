@@ -1,0 +1,31 @@
+service: coin-prices
+
+provider:
+  name: aws
+  versionFunctions: false
+  runtime: nodejs12.x
+  region: us-west-2
+  stage: ${env:STAGE}
+  environment:
+    COINURL: ${env:COINURL}
+    S3_BUCKET: ${env:S3_BUCKET}
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 5000
+
+package:
+  exclude:
+    - ./**
+  include:
+    - dist/**
+    
+functions:
+  scrape:
+    handler: dist/index.handler
+    memorySize: 1024
+    timeout: 900
+    description: Get coin prices

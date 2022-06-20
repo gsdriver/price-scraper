@@ -1,0 +1,12 @@
+defaultSeverity: error
+extends: "tslint:recommended"
+jsRules: true
+rules:
+  semicolon: [true, "always", "ignore-interfaces"]
+  interface-name: false
+  max-classes-per-file: false
+  max-line-length: false
+  object-literal-sort-keys: false
+  no-unused-expression: [true, "allow-new"] # required for CDK
+  variable-name: [true, allow-snake-case] #
+  ordered-imports: [false]
