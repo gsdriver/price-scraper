@@ -1,7 +1,6 @@
 import chromium from "chrome-aws-lambda";
-import { child } from "winston";
 import * as logger from "./logger";
-import { autoScroll, CoinIssue, CoinPrice, CoinSeries, timeout } from "./utils";
+import { CoinPrice, CoinSeries } from "./utils";
 
 let puppeteer: any;
 try {
@@ -185,11 +184,13 @@ export const readPrices = async (name: string, url: string): Promise<CoinSeries>
       }
     } while (result?.success);
 
-    page.close();
+    await page.close();
   } catch(e) {
     logger.error((e as any)?.message, `Error reading ${coinSeries.name}`);
   }
 
-  browser.close();
+  logger.info("Finished reading prices", { name });
+
+  await browser.close();
   return coinSeries;
 };
