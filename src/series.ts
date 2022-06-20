@@ -116,12 +116,12 @@ const readSeries = async (): Promise<{ series: string, url: string }[]> => {
       row++;
     } while (!noEntries);
 
-    page.close();
+    await page.close();
   } catch(e) {
     logger.error((e as any)?.message, "Error reading page");
   }
 
-  browser.close();
+  await browser.close();
   return series;
 };
 
