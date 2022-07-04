@@ -12,7 +12,8 @@ try {
 }
 
 const SERIESFILE = "serieslist.json";
-const RUNSPERDAY = 6;
+const RUNPERIOD = 4;
+const RUNSPERDAY = Math.round(24 / RUNPERIOD);
 const RUNSPERWEEK = 7 * RUNSPERDAY;
 
 const launchBrowser = async () => {
@@ -190,7 +191,7 @@ export const getSeries = async (event: any): Promise<{ series: string, url: stri
   // We'll dynamically calculate how many series to return based on hours since start of week
   // We run every 4 hours (6 times per day), so take 1/42 of the list each time we run
   const d = new Date();
-  const slice: number = d.getDay() * RUNSPERDAY + Math.floor(d.getHours() / RUNSPERDAY);
+  const slice: number = d.getDay() * RUNSPERDAY + Math.floor(d.getHours() / RUNPERIOD);
   const iStart: number = Math.floor(slice * (series.length / RUNSPERWEEK));
   const iEnd: number = Math.floor((slice + 1) * (series.length / RUNSPERWEEK));
 
